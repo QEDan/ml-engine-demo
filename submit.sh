@@ -2,7 +2,7 @@
 
 export JOBNAME=TEST8
 export JOBBUCKET=gs://productionml-mlengine-demo
-export JOBDIR=${JOBBUCKET}/ml-engine
+export JOBDIR=${JOBBUCKET}/job-dir/${JOBNAME}/
 export JOBREGION=us-central1
 export TRAINFILE=${JOBBUCKET}/data/random_linear.csv
 
