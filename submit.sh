@@ -1,10 +1,11 @@
 #!/bin/bash
 
-export JOBNAME=TEST8
+export JOBNAME=TEST11
 export JOBBUCKET=gs://productionml-mlengine-demo
 export JOBDIR=${JOBBUCKET}/job-dir/${JOBNAME}/
 export JOBREGION=us-central1
 export TRAINFILE=${JOBBUCKET}/data/random_linear.csv
+export CONFIGFILE=hp-tuning-config.yaml
 
 
 gcloud ml-engine jobs submit training $JOBNAME \
@@ -13,5 +14,6 @@ gcloud ml-engine jobs submit training $JOBNAME \
     --package-path ./model \
     --region $JOBREGION \
     --runtime-version 1.6 \
+    --config ${CONFIGFILE}\
     -- --train-file $TRAINFILE \
-    --export-dir ${JOBBUCKET}/saved_models/${JOBNAME}
+    --export-dir ${JOBBUCKET}/saved_models/${JOBNAME}/

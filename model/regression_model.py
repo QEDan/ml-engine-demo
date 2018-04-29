@@ -4,6 +4,10 @@ import tensorflow as tf
 from tensorflow.python.lib.io import file_io
 import pandas as pd
 import argparse
+import os
+import uuid
+from tensorflow.core.framework.summary_pb2 import Summary
+
 
 def load_data(file_path):
     file_stream = file_io.FileIO(file_path, mode='r')
@@ -24,6 +28,10 @@ def train_model(args):
 
     train_op = tf.train.GradientDescentOptimizer(args.learningRate).minimize(cost)
 
+    summary = Summary(value=[Summary.Value(tag='hyperparameterMetricTag', simple_value=0)])
+    eval_path = os.path.join(args.jobDir, 'metric1')
+    summary_writer = tf.summary.FileWriter(eval_path)
+
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
 
@@ -31,7 +39,13 @@ def train_model(args):
             for (x, y) in zip(trX, trY):
                 sess.run(train_op, feed_dict={X: x, Y: y})
 
-        tf.saved_model.simple_save(sess, args.exportDir, inputs={"X":X} , outputs={"Y": Y})
+        tf.saved_model.simple_save(sess, os.path.join(args.exportDir,
+                                   "learning_rate="
+                                   + str(args.learningRate)),
+                                   inputs={"X":X} ,
+                                   outputs={"Y": Y})
+        summary_writer.add_summary(summary)
+        summary_writer.flush()
         print(sess.run(w))
 
 if __name__ == "__main__":
