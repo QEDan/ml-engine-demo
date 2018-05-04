@@ -13,6 +13,6 @@ Keras+tensorflow models.
 
 
 ## Presenter Bio
-Dan Mazur is a senior data scientist at Grow Financial where he is reinventing banking using
+Dan Mazur is a senior data scientist at Grow Technologies where he is reinventing banking using
 data analytics and machine learning. Dan has a PhD in theoretical high energy
 astrophysics from UBC. 
