@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-import tensorflow as tf
-from tensorflow.python.lib.io import file_io
-import pandas as pd
 import argparse
 import os
-import uuid
+
+import pandas as pd
+import tensorflow as tf
 from tensorflow.core.framework.summary_pb2 import Summary
+from tensorflow.python.lib.io import file_io
 
 
 def load_data(file_path):
@@ -14,8 +14,10 @@ def load_data(file_path):
     df = pd.read_csv(file_stream)
     return df['x'], df['y']
 
+
 def model(X, w):
     return tf.multiply(X, w)
+
 
 def train_model(args):
     trX, trY = load_data(args.trainingFile)
@@ -28,8 +30,7 @@ def train_model(args):
 
     train_op = tf.train.GradientDescentOptimizer(args.learningRate).minimize(cost)
 
-    summary = Summary(value=[Summary.Value(tag='hyperparameterMetricTag', simple_value=0)])
-    eval_path = os.path.join(args.jobDir, 'metric1')
+    eval_path = os.path.join(args.jobDir, 'logs')
     summary_writer = tf.summary.FileWriter(eval_path)
 
     with tf.Session() as sess:
@@ -40,13 +41,17 @@ def train_model(args):
                 sess.run(train_op, feed_dict={X: x, Y: y})
 
         tf.saved_model.simple_save(sess, os.path.join(args.exportDir,
-                                   "learning_rate="
-                                   + str(args.learningRate)),
-                                   inputs={"X":X} ,
+                                                      "learning_rate="
+                                                      + str(args.learningRate)),
+                                   inputs={"X": X},
                                    outputs={"Y": Y})
+        final_cost = sess.run(tf.reduce_sum(tf.square(Y - y_model)), feed_dict={X: trX, Y: trY})
+        summary = Summary(value=[Summary.Value(tag='hyperparameterMetricTag', simple_value=final_cost)])
+        summary_writer.add_graph(sess.graph)
         summary_writer.add_summary(summary)
         summary_writer.flush()
         print(sess.run(w))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
