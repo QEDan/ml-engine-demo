@@ -44,7 +44,7 @@ def train_model(args):
                                                       "learning_rate="
                                                       + str(args.learningRate)),
                                    inputs={"X": X},
-                                   outputs={"Y": Y})
+                                   outputs={"Y": y_model})
         final_cost = sess.run(tf.reduce_sum(tf.square(Y - y_model)), feed_dict={X: trX, Y: trY})
         summary = Summary(value=[Summary.Value(tag='hyperparameterMetricTag', simple_value=final_cost)])
         summary_writer.add_graph(sess.graph)

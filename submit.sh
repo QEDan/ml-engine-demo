@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export JOBNAME=TEST11
+export JOBNAME=TEST015
 export JOBBUCKET=gs://productionml-mlengine-demo
 export JOBDIR=${JOBBUCKET}/job-dir/${JOBNAME}/
 export JOBREGION=us-central1
