@@ -3,7 +3,7 @@ trainingInput:
     goal: MAXIMIZE
     hyperparameterMetricTag: hyperparameterMetricTag
     maxTrials: 4
-    maxParallelTrials: 2
+    maxParallelTrials: 4
     params:
       - parameterName: learning-rate
         type: DOUBLE
