@@ -2,7 +2,7 @@
 
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
-import json
+
 credentials = GoogleCredentials.get_application_default()
 
 api = discovery.build('ml', 'v1', credentials=credentials,
