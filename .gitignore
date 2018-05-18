@@ -104,3 +104,6 @@ ENV/
 .idea/
 
 saved_models/
+
+#Cloud credentials file
+ml-engine-demo-*.json
