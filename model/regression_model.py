@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import json
 import os
 
 import pandas as pd
@@ -19,6 +20,17 @@ def model(X, w):
     return tf.multiply(X, w)
 
 
+def parse_trial_id():
+    tf_config = os.environ.get('TF_CONFIG')
+    if not tf_config:
+        return 0
+
+    tf_config_json = json.loads(tf_config)
+    trial_index = tf_config_json.get('task', {}).get('trial')
+    if trial_index:
+        return trial_index
+    return 0
+
 def train_model(args):
     trX, trY = load_data(args.trainingFile)
     X = tf.placeholder("float")
@@ -33,6 +45,8 @@ def train_model(args):
     eval_path = os.path.join(args.jobDir, 'logs')
     summary_writer = tf.summary.FileWriter(eval_path)
 
+    trial_id = parse_trial_id()
+
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
 
@@ -41,8 +55,7 @@ def train_model(args):
                 sess.run(train_op, feed_dict={X: x, Y: y})
 
         tf.saved_model.simple_save(sess, os.path.join(args.exportDir,
-                                                      "learning_rate="
-                                                      + str(args.learningRate)),
+                                                      str(trial_id)),
                                    inputs={"X": X},
                                    outputs={"Y": y_model})
         final_cost = sess.run(tf.reduce_sum(tf.square(Y - y_model)), feed_dict={X: trX, Y: trY})
