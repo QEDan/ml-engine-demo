@@ -1,6 +1,6 @@
 trainingInput:
   hyperparameters:
-    goal: MAXIMIZE
+    goal: MINIMIZE
     hyperparameterMetricTag: hyperparameterMetricTag
     maxTrials: 4
     maxParallelTrials: 4
