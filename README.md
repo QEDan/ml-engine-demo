@@ -1,6 +1,8 @@
 # ml-engine-demo
 A small demo of how to use the Machine Learning Engine on Google Cloud Platform.
-This repo accompanies a presentation done for the Vancouver Machine Learning in Production Meetup group.
+This repo accompanies a presentation done for the [Vancouver Machine Learning in Production Meetup group](https://www.meetup.com/LearnDataScience/events/250289055/).
+
+The presentation slides are [available here](https://docs.google.com/presentation/d/1z7YSvw8RBk_bekTvVJGTUv3K6efXEjY4RaUD8wU-Z9s/edit?usp=sharing).
 
 ## Talk Abstract
 Machine Learning Engine is a product on Google Cloud Platform that allows for highly managed
@@ -13,6 +15,6 @@ Keras+tensorflow models.
 
 
 ## Presenter Bio
-Dan Mazur is a senior data scientist at Grow Technologies where he is reinventing banking using
+Dan Mazur is a senior data scientist at [Grow Technologies](https://www.poweredbygrow.com) where he is reinventing banking using
 data analytics and machine learning. Dan has a PhD in theoretical high energy
-astrophysics from UBC. 
+astrophysics from [UBC](https://www.ubc.ca). 
